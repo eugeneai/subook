@@ -1,0 +1,761 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{subook}[2015/08/20 State University (Soviet Union) Book]
+\RequirePackage{iftex}
+%\RequirePackage{etoolbox}
+%\RequirePackage{kvoptions}
+\ifPDFTeX\relax
+ %\RequirePackage{newtxtext}
+ %\RequirePackage{newtxmath}
+ \RequirePackage[utf8]{inputenc}
+ %\RequirePackage[T2]{fontenc}
+ \RequirePackage{times}
+\else
+ \RequirePackage{luatextra}
+\fi
+%\RequirePackage{fontspec}
+\RequirePackage[english,russian]{babel}
+%\RequirePackage[utf8]{inputenc}
+\RequirePackage{amssymb,amsmath,amsfonts}
+\@ifpackageloaded{amsthm}{}{
+\RequirePackage{ntheorem}
+}
+\RequirePackage{geometry}
+\RequirePackage{longtable}
+\RequirePackage{fancyhdr}
+%\RequirePackage{pstricks}
+%\RequirePackage{pst-all}
+%\RequirePackage{pst-poly}
+\RequirePackage{indentfirst}
+\RequirePackage{caption}
+\RequirePackage{pageslts}
+\RequirePackage{tocloft}
+\RequirePackage{secdot}
+\RequirePackage{cmap}
+\RequirePackage[final]{hyperref}
+\RequirePackage[sort&compress]{natbib} % Adjusting \cite's
+%\RequirePackage{hypernat}
+\ifPDFTeX\relax
+\else
+\RequirePackage{unicode-math}
+\fi
+\RequirePackage[perpage,marginal,hang]{footmisc}
+
+%\RequirePackage[protrusion=true,expansion=true]{microtype}
+\RequirePackage[protrusion=false,expansion=false]{microtype}
+
+\RequirePackage{color}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+
+\ifPDFTeX\relax
+\DeclareMathAlphabet{\mathbfit}{OML}{cmm}{b}{it} % stub
+\def\LaTeXsys{\LaTeX2e}
+\else
+\defaultfontfeatures{Ligatures={TeX,Required}}
+\def\LaTeXsys{\LuaLaTeX}
+\fi
+\def\su@colonsize{\small}
+\newcommand\su@scale{1.0}
+\newcommand\su@chapter@font@size{\LARGE} % For Chapter sizes
+\def\su@title@indent{\z@}
+\def\su@chapter@font{\bfseries}
+\def\sutitlefont{\su@chapter@font}
+\def\su@sec@title@font{\normalfont}
+\def\su@par@title@font{\normalfont}
+\def\su@sec@size{\Large}
+\def\su@subsec@size{\large}
+\def\su@subsubsec@size{\normalsize}
+\newcommand\sutypeface{Computer Modern}
+\newcommand\sufontfamily{\sutypeface}
+
+\setcitestyle{numbers,square}
+\def\isu@defgeom{\geometry{}}
+
+\let\chapter@su@name=\chaptername
+
+%-------------------- Option declarations ----------------------------
+
+\def\sbk@fontpath{subook/}
+
+\DeclareOption{demo}{%
+\def\sbk@fontpath{./}%
+}
+
+\DeclareOption{a4paper}{
+\geometry{paper=a4paper, twoside, includehead, left=2.5cm, right=2.5cm, top=1.7cm, bottom=2.5cm}
+\let\headwidth=\textwidth
+}
+
+\renewcommand{\chapter@su@name}{Глава}
+\DeclareOption{a5paper}{
+\geometry{paper=a5paper, twoside, inner=2cm, outer=1.8cm, top=1.7cm, bottom=1.9cm}
+}
+
+\DeclareOption{microtyping}{
+% activate={true,nocompatibility} - activate protrusion and expansion
+% final - enable microtype; use "draft" to disable
+% tracking=true, kerning=true, spacing=true - activate these techniques
+% factor=1100 - add 10% to the protrusion amount (default is 1000)
+% stretch=10, shrink=10 - reduce stretchability/shrinkability (default is 20/20)
+\SetProtrusion
+    [name=std]
+    {
+      encoding={utf8},
+      family=*}
+    {
+    « = {300,     },
+    » = {    , 300},
+    „ = {300,     },
+    “ = {    , 300},
+    ( = {300,     },
+    ) = {    , 300},
+    ! = {    , 300},
+    ? = {    , 300},
+    : = {    , 300},
+    ; = {    , 300},
+    . = {    , 300},
+    - = {    , 300},
+   {,}= {    , 300}
+    }
+%\DeclareMicrotypeSet{t2atext}{}
+%\UseMicrotypeSet{t2atext}
+\microtypesetup{protrusion=true,expansion=true}
+\ifPDFTeX\relax
+\else
+\newfontfeature{Microtype}{protrusion=default;expansion=default;}
+\fi
+}
+
+%\SetupKeyvalOptions{
+%family = subk,
+%prefix = subk@
+%}
+
+%\DeclareStringOption[subook/]{fontdir}
+
+\DeclareOption{monograph}{
+\setcitestyle{numbers,square,semicolon}
+}
+\DeclareOption{handbook}{
+\setcitestyle{numbers,square,comma}
+\renewcommand{\chapter@su@name}{}
+}
+\DeclareOption{fancytop}{
+%\fancypagestyle{plain}{%
+\fancyhf{} % clear all header and footer fields
+%\fancyfoot[C]{\bfseries \thepage} % except the center
+\fancyhead[RE]{\su@colonsize\it \nouppercase{\leftmark}}
+\fancyhead[LO]{\su@colonsize\it \nouppercase{\rightmark}}
+\fancyhead[RO,LE]{\su@colonsize \thepage}
+%\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{0pt}%}
+\pagestyle{fancy}
+}
+\DeclareOption{fancybot}{
+%\fancypagestyle{plain}{%
+\fancyhf{} % clear all header and footer fields
+%\fancyfoot[C]{\bfseries \thepage} % except the center
+\fancyhead[LE]{\su@colonsize\it \nouppercase{\leftmark}}
+\fancyhead[RO]{\su@colonsize\it \nouppercase{\rightmark}}
+\fancyfoot[RO,LE]{\su@colonsize \thepage}
+%\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{0pt}%}
+\pagestyle{fancy}
+}
+\DeclareOption{mag}{
+%\mag 1200
+%\def\isu@defgeom{\geometry{papersize={17.5cm,24.75cm}, left=2.25cm, right=2.25cm, top=1.5cm, bottom=2.33cm, centering, bindingoffset=1mm}}
+\def\isu@defgeom{\geometry{}}
+}
+\DeclareOption{14pt}{
+\renewcommand\su@scale{1.1667}
+\renewcommand\baselinestretch{1.3} % WORKAROUND
+}
+
+\def\su@set@xitsmathfont{\setmathfont[
+Ligatures=TeX,
+Scale=MatchLowercase,
+Path=\sbk@fontpath XITS/,
+BoldFont=xits-mathbold.otf
+]{xits-math.otf}%
+}
+
+\def\su@set@cambriamathfont{\setmathfont[
+Ligatures=TeX,
+Scale=MatchLowercase,
+Path=\sbk@fontpath Microsoft/
+]{Cambria-Math.ttf}%
+}
+
+\def\su@set@lmmathfont{\setmathfont[
+Ligatures=TeX,
+Scale=MatchLowercase
+]{latinmodern-math.otf}%
+}
+
+\def\su@set@asanamathfont{\setmathfont[
+Ligatures=TeX,
+Path=\sbk@fontpath,
+Scale=MatchLowercase
+]{Asana-Math.otf}%
+}
+
+\def\su@set@eulermathfont{\setmathfont[
+Ligatures=TeX,
+Path=\sbk@fontpath Euler/,
+Scale=MatchLowercase,
+math-style=upright,
+vargreek-shape=unicode
+]{euler.otf}%
+}
+
+\newif\if@loadxitsmath\@loadxitsmathfalse
+\DeclareOption{xitsmath}{
+\@loadxitsmathtrue
+\def\su@set@mathfont{\su@set@xitsmathfont}
+}
+
+\DeclareOption{cambriamath}{
+\def\su@set@mathfont{\su@set@cambriamathfont}
+}
+
+\DeclareOption{lmmath}{
+\def\su@set@mathfont{\su@set@lmmathfont}
+}
+
+\DeclareOption{asanamath}{
+\def\su@set@mathfont{\su@set@asanamathfont}
+}
+
+\newif\if@loadeulermath\@loadeulermathfalse
+\DeclareOption{eulermath}{
+\@loadeulermathtrue
+\def\su@set@mathfont{\su@set@eulermathfont}
+}
+
+\DeclareOption{times}{
+%\renewcommand{\rmdefault}{ftm}
+\ifPDFTeX\relax
+ %\renewcommand{\rmdefault}{ftm}
+ %\input{times.sty}
+\else
+\setmainfont[Ligatures=TeX,
+Scale=\su@scale,
+Path=\sbk@fontpath Microsoft/,
+ItalicFont=timesi.ttf,
+BoldFont=timesbd.ttf,
+BoldItalicFont=timesbi.ttf,
+]{times.ttf}
+\setmonofont[
+Ligatures=TeX,
+Scale=MatchLowercase,Numbers=SlashedZero,
+Scale=\su@scale,
+Path=\sbk@fontpath Microsoft/,
+ItalicFont=couri.ttf,
+BoldFont=courbd.ttf,
+BoldItalicFont=courbi.ttf,
+]{cour.ttf}
+\setsansfont[
+Ligatures=TeX,
+Scale=MatchLowercase,
+Scale=\su@scale,
+Path=\sbk@fontpath Microsoft/,
+ItalicFont=calibrii.ttf,
+BoldFont=calibrib.ttf,
+BoldItalicFont=calibriz.ttf,
+]{calibri.ttf}
+%\def\su@set@mathfont{\su@set@xitsmathfont}
+\fi
+\renewcommand\sutypeface{Таймс}
+}
+
+\DeclareOption{pubtype}{
+\ifPDFTeX\relax
+\else
+\setmainfont[
+  Scale=\su@scale,
+  Path=\sbk@fontpath Public-Type/,
+  BoldFont=PTF75F.ttf,
+  ItalicFont=PTF56F.ttf,
+  BoldItalicFont=PTF76F.ttf
+]{PTF55F.ttf}
+
+\setsansfont[
+  Path=\sbk@fontpath Public-Type/,
+  BoldFont=PTS75F.ttf,
+  ItalicFont=PTS56F.ttf,
+  BoldItalicFont=PTS76F.ttf,
+  Scale=MatchLowercase
+]{PTS55F.ttf}
+
+\newfontface\nwshape[ % Narrow Shape for PT Sans
+  Path=\sbk@fontpath Public-Type/,
+  BoldFont=PTN77F.ttf,
+  Scale=MatchLowercase,
+]{PTN57F.ttf}
+
+\newfontface\sfcpshape[ % Caption Shape for PT Sans
+  Path=\sbk@fontpath Public-Type/,
+  BoldFont=PTC75F.ttf,
+  Scale=MatchLowercase
+]{PTC55F.ttf}
+
+\newfontface\rmcpshape[ % Caption Shape for PT Sans
+  Path=\sbk@fontpath Public-Type/,
+  ItalicFont=PTZ56F.ttf,
+  Scale=MatchLowercase
+]{PTZ55F.ttf}
+
+\setmonofont[Ligatures=TeX,Scale=MatchLowercase,Numbers=SlashedZero,
+  Path=\sbk@fontpath Public-Type/,
+  BoldFont=PTM75F.ttf,
+  Scale=MatchLowercase
+]{PTM55F.ttf}
+%\def\su@set@mathfont{\su@set@lmmathfont}
+\fi
+\renewcommand\sutypeface{\foreignlanguage{english}{\normalfont Public Type (\copyright{} {\textit{Para}Type})}}
+}
+
+\DeclareOption{liberation}{
+\ifPDFTeX\relax
+\else
+\setmainfont[
+  Scale=\su@scale,
+  Path=\sbk@fontpath Liberation/fonts/,
+  BoldFont=LiberationSerif-Bold.ttf,
+  ItalicFont=LiberationSerif-Italic.ttf,
+  BoldItalicFont=LiberationSerif-BoldItalic.ttf
+]{LiberationSerif-Regular.ttf}
+\setsansfont[
+  Scale=\su@scale,
+  Path=\sbk@fontpath Liberastika/,
+  BoldFont=Liberastika-Bold.ttf,
+  ItalicFont=Liberastika-Italic.ttf,
+  BoldItalicFont=Liberastika-BoldItalic.ttf
+]{Liberastika-Regular.ttf}
+\setmonofont[Ligatures=TeX,Scale=MatchLowercase,Numbers=SlashedZero,
+  Path=\sbk@fontpath Liberation/fonts/,
+  Scale=MatchLowercase,
+  BoldFont=LiberationMono-Bold.ttf,
+  ItalicFont=LiberationMono-Italic.ttf,
+  BoldItalicFont=LiberationMono-BoldItalic.ttf
+]{LiberationMono-Regular.ttf}
+%\def\su@set@mathfont{\su@set@xitsmathfont}
+\fi
+\renewcommand\sutypeface{\foreignlanguage{english}{\normalfont Liberation}}
+}
+
+\DeclareOption{cpcaption}{
+\ExecuteOptions{ptfonts}
+\def\su@chapter@font{\sffamily\sfcpshape\bfseries}
+\def\su@sec@title@font{\sffamily\sfcpshape\bfseries}
+%\def\su@par@title@font{\sffamily\nwshape\bfseries} % Bad style as compared to \description's
+}
+
+\DeclareOption{ptfonts}{
+\ifPDFTeX\relax
+\else
+\newfontfamily\ptserif[
+  Scale=\su@scale,
+  Path=\sbk@fontpath Public-Type/,
+  BoldFont=PTF75F.ttf,
+  ItalicFont=PTF56F.ttf,
+  BoldItalicFont=PTF76F.ttf
+]{PTF55F.ttf}
+
+\newfontfamily\ptsans[
+  Path=\sbk@fontpath Public-Type/,
+  BoldFont=PTS75F.ttf,
+  ItalicFont=PTS56F.ttf,
+  BoldItalicFont=PTS76F.ttf,
+  Scale=MatchLowercase
+]{PTS55F.ttf}
+
+\newfontface\nwshape[ % Narrow Shape for PT Sans
+  Path=\sbk@fontpath Public-Type/,
+  BoldFont=PTN77F.ttf,
+  Scale=MatchLowercase,
+]{PTN57F.ttf}
+
+\newfontface\sfcpshape[ % Caption Shape for PT Sans
+  Path=\sbk@fontpath Public-Type/,
+  BoldFont=PTC75F.ttf,
+  Scale=MatchLowercase
+]{PTC55F.ttf}
+
+\newfontface\rmcpshape[ % Caption Shape for PT Sans
+  Path=\sbk@fontpath Public-Type/,
+  ItalicFont=PTZ56F.ttf,
+  Scale=MatchLowercase
+]{PTZ55F.ttf}
+
+\newfontfamily\ptmono[Ligatures=TeX,Scale=MatchLowercase,Numbers=SlashedZero,
+  Path=\sbk@fontpath Public-Type/,
+  BoldFont=PTM75F.ttf,
+  Scale=MatchLowercase
+]{PTM55F.ttf}
+}
+
+\DeclareOption{freetimes}{
+%\renewcommand{\rmdefault}{ftm}
+\setmainfont[Scale=\su@scale]{Free Times}
+\setmonofont[Ligatures=TeX,Scale=MatchLowercase,Numbers=SlashedZero]{Free Courier}
+\fi
+\renewcommand\sutypeface{Таймс}
+}
+
+\DeclareOption{lit}{
+\ifPDFTeX\relax
+\else
+\setmainfont[
+  Ligatures={TeX},
+  Path=\sbk@fontpath Literaturnaya/,
+  BoldFont=7131157.ttf,
+  ItalicFont=5131162.ttf,
+  BoldItalicFont=6131147.ttf,
+]{3131265.ttf}
+\renewcommand\sutypeface{Литературная}
+}
+\DeclareOption{qa}{
+\setmainfont[
+Ligatures={TeX},
+Path=\sbk@fontpath,
+BoldFont=quantantiquabold.ttf,
+ItalicFont=quantantiquaitalic.ttf,
+BoldItalicFont=quantantiquabolditalic.ttf,
+]{quantantiquaplain.ttf}
+\renewcommand\sutypeface{Quant Antiqua}
+}
+\DeclareOption{listbib}{
+\renewcommand{\@biblabel}[1]{#1.}
+}
+\DeclareOption{firamono}{
+\ifPDFTeX\relax
+\else
+\setmonofont[Ligatures=TeX,
+Scale=MatchLowercase,
+Numbers=SlashedZero,
+Path=\sbk@fontpath Fira/otf/,
+BoldFont=FiraMono-Bold.otf
+]{FiraMono-Regular.otf}
+\fi
+}
+\DeclareOption{firasans}{
+\ifPDFTeX\relax
+\else
+\setsansfont[Ligatures=TeX,Scale=MatchLowercase,
+  Path=\sbk@fontpath Fira/otf/,
+BoldFont=FiraSans-Bold.otf,
+ItalicFont=FiraSans-Italic.otf,
+BoldItalicFont=FiraSans-BoldItalic.otf
+]{FiraSans-Regular.otf}
+\fi
+}
+\DeclareOption{inconsolata}{
+%\setmonofont[Ligatures=TeX,Scale=MatchLowercase,Numbers=SlashedZero]{Inconsolata LGC}
+\ifPDFTeX\relax
+\else
+\setmonofont[
+  Path=\sbk@fontpath Inconsolata-LGC/,
+%  Path=Inconsolata-LGC/,
+  Scale=MatchLowercase,
+%  Ligatures={TeX},
+  Numbers=SlashedZero,
+  BoldFont="inconsolatalgcbold.ttf",
+  ItalicFont="inconsolatalgcitalic.ttf",
+  BoldItalicFont="inconsolatalgcbolditalic.ttf",
+]{inconsolatalgc.ttf}
+\fi
+}
+
+\DeclareOption{indenttitles}{
+\def\su@title@indent{\parindent}
+}
+\DeclareOption{smalltitles}{
+\def\su@sec@size{\large}
+\def\su@subsec@size{\normalsize}
+\def\su@subsubsec@size{\normalsize}
+\renewcommand\su@chapter@font@size{\Large}
+% \hyphenpenalty=10000 % to prevent hyps in headers
+}
+
+\DeclareOption{irnitu}{
+%\geometry{twoside, includehead, left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+%colontitles from edge 1.7 cm ??
+%page number at bottom-center
+%Nubering starts from 3-rd page
+%Toc at page 3.
+%No of pages % 4 = 0
+% other see http://www.istu.edu/docs/science/2014/pamiatka.doc
+\setlength{\headwidth}{\textwidth}
+\setlength{\parindent}{12.5mm}
+\fancyhf{} % clear all header and footer fields
+%\fancyfoot[C]{\bfseries \thepage} % except the center
+\fancyhead[LE]{\su@colonsize\it \nouppercase{\leftmark}}
+\fancyhead[RO]{\su@colonsize\it \nouppercase{\rightmark}}
+\fancyfoot[CO,CE]{\su@colonsize \thepage}
+%\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{0pt}%}
+\pagestyle{fancy}
+\renewcommand{\chaptername}{Глава}
+\renewcommand{\chapter@su@name}{Глава}
+\renewcommand{\baselinestretch}{1.0}
+}
+
+\ExecuteOptions{a5paper,handbook,fancybot,times,cambriamath,firamono,smalltitles,listbib,microtyping,final}
+
+%\ProcessKeyvalOptions{subook}\relax
+\ProcessOptions\relax
+
+\if@loadxitsmath
+ \ifPDFTeX
+  %\RequirePackage{stix} % lloks bolder
+  \RequirePackage{newtxmath}
+ \fi
+\fi
+
+\if@loadeulermath
+ \ifPDFTeX
+ %\RequirePackage{tgpagella}
+ \RequirePackage{eulervm}
+ \fi
+\fi
+
+\def\@makechapterhead#1{%
+  %\vspace*{30\p@}%
+  {\parindent \z@ \raggedright \su@chapter@font
+    \@hangfrom{%
+    \ifnum \c@secnumdepth >\m@ne
+        \su@chapter@font@size \su@chapter@font%
+         %\ifx\@chapapp\empty
+         \setbox0=\hbox{\@chapapp\unskip}%
+         \ifdim\wd0=0pt
+           \relax
+         \else
+           \@chapapp\space
+         \fi
+         \thechapter.\hbox to 0.3em {}  % Trimmed here
+        \nobreak
+    \fi
+    }%
+    {\interlinepenalty\@M\hyphenpenalty\@M
+    \su@chapter@font@size \su@chapter@font #1\par\nobreak
+    }
+    \vskip 15\p@
+    %\thispagestyle{empty}
+  }}
+
+%\ifcsmacro{abstract}{}{
+%  \let\endabstract\undefined%
+%  \newenvironment{myenvironment}{Not seen so far.}{End.}
+%}
+%\newenvironment{abstract}{\normalfont\small}{}
+
+\newcommand\sutitlefontface{\bfseries\scshape\Large}
+\newcommand{\sutitletext}{\@title}
+\newcommand\sutitle{%
+\begin{center}%
+{\sutitlefontface\foreignlanguage{russian}{\sutitletext}}
+\end{center}}
+\newcommand\sutitleex{%
+{\@title}}
+\newcommand\forename[1]{#1}
+\newcommand\surname[1]{#1}
+
+%microtype, flafter
+% использовать Times New Roman (checked)
+
+%Например, команда \enlargethispage{2\baselineskip} позволит текущей странице стать длиннее (выше) на две строчки. Вариант команды «со звёздочкой», \enlargethispage*{длина}, попытается сжать страницу насколько это возможно.
+
+
+%\RequirePackage{listings} % Не работает с русскими комментариями.
+
+
+%Основные требования для макетов в редакторе Тех
+%Поля: верхнее – 1,8 см, нижнее – 2,8, левое и правое – 2,7
+%Риасстояние от края страницы до колонтитула – 2,1 см
+
+%\def\normalsize{\fontsize{15}{18}\selectfont{}}
+
+%\renewcommand{\publishername}{Иркутский государственный технический университет}
+%\renewcommand{\locationname}{Иркутск}
+\def\baselinestretch{1.0}
+
+\@ifpackageloaded{amsthm}{}{
+\theoremseparator{.}
+}
+
+\newenvironment{mygroup}{}{}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+% - ISDCT SB RAS Dissertation package -----
+\renewcommand{\baselinestretch}{1.0}
+
+% adjustenment of the title sizes.
+\renewcommand\cftpartaftersnum{.}
+\renewcommand\cftchapaftersnum{.}
+\renewcommand\cftsecaftersnum{.}
+\renewcommand\cftsubsecaftersnum{.}
+\renewcommand\cftsubsubsecaftersnum{.}
+%% %\renewcommand\ctfchapfont{\large\bf}
+\renewcommand\cftpartnumwidth{3ex}
+\renewcommand\cftchapnumwidth{3ex}
+\renewcommand\cftsecnumwidth{4ex}
+\renewcommand\cftsubsecnumwidth{6ex}
+\renewcommand\cftsubsubsecnumwidth{7ex}
+
+
+%\sectiondot{section}
+%\sectiondot{subsection}
+%\sectiondot{subsubsection}
+%\sectiondot{subsubsubsection}
+
+\def\@schapter#1{\if@twocolumn
+                   \@topnewpage[\@makeschapterhead{#1}]%
+                 \else
+                   \@makeschapterhead{#1}%
+                   \@afterheading
+                 \fi
+                 \addcontentsline{toc}{chapter}{#1}% Added here
+    %\thispagestyle{plain}%
+        \@mkboth{%
+           \MakeUppercase{#1}}{\MakeUppercase{#1}}%
+}
+
+\renewcommand\bibsection{%
+\chapter*{\bibname}%
+\@mkboth{\MakeUppercase{\bibname}}{\MakeUppercase{\bibname}}%
+}%
+
+% This is for the following table of contents printing
+\def\@sschapter#1{\if@twocolumn
+                   \@topnewpage[\@makeschapterhead{#1}]%
+                 \else
+                   \@makeschapterhead{#1}%
+                   \@afterheading
+                 \fi
+}
+
+\def\@makeschapterhead#1{%
+  %\vspace*{30\p@}%
+  {\parindent \z@ \raggedright
+    \interlinepenalty\@M
+    \hyphenpenalty\@M
+    {\su@chapter@font@size \su@chapter@font #1\par\nobreak}
+    \vskip 15\p@ %% Here
+  }}
+
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=true,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={Irkutsk State University Work},    % title
+    pdfauthor={Some Outstanding ISU.RU Professor},     % author
+    pdfsubject={The Subject},   % subject of the document
+    pdfcreator={LaTeX},   % creator of the document
+    pdfproducer={LaTeX}, % producer of the document
+    pdfkeywords={Irkutsk State University}, % list of keywords
+    pdfnewwindow=true,      % links in new window
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=black, %[rgb]{0 0.4 0.1},          % color of internal links
+    citecolor=black, %blue,        % color of links to bibliography
+    filecolor=black,      % color of file links
+    urlcolor=black % [rgb]{0.3 0.0 0.3}           % color of external links
+}
+
+\setcounter{tocdepth}{1}  % Точность представления содержания
+%\setcounter{tocdepth}{3}  % Точность представления содержания
+
+\DeclareCaptionLabelSeparator{dotnewline}{.\\}
+\DeclareCaptionFormat{rightcenter}{\parbox{\linewidth}{{\raggedleft #1#2}\par {\centering #3}}}
+
+%\renewcommand\@tempdima{60px}
+\setlength{\footnotemargin}{0.5em}
+
+
+%\renewcommand{\thepage}{\tiny\arabic{page}} % Does not work
+%\setmathfont[Ligatures={TeX},Scale=MatchLowercase]{\su@mathfont}
+% \setmathfont[
+% Ligatures=TeX,
+% Scale=MatchLowercase,
+% Path=\sbk@fontpath XITS/,
+% BoldFont=xits-mathbold.otf
+% ]{xits-math.otf}
+
+\ifPDFTeX\relax
+\else
+\su@set@mathfont%
+\fi
+\AtBeginDocument{
+\pagenumbering{arabic}
+\normalsize
+\captionsetup[figure]{labelformat=simple,labelsep=period,font=small,labelfont={bf,small},textfont={small,it},format=hang,margin=3ex,justification=justified,singlelinecheck=false}
+\captionsetup[table]{format=rightcenter,labelsep=newline,singlelinecheck=off,font={small},labelfont={small,bf},textfont={small}, skip=0.2ex}
+%\captionsetup[table]{format=plain,labelsep=newline,singlelinecheck=off,justification=Centering} %%%% THIS IS just CENTERED
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\thechapter.\ #1}}{\MakeUppercase{\thechapter.\ #1}}}
+\renewcommand{\sectionmark}[1]{\markright{\MakeUppercase{\thesection.\ #1}}{}}
+\renewcommand\tableofcontents{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \@sschapter{\contentsname% Here the changes are
+        \@mkboth{%
+           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
+    %\thispagestyle{plain}%
+    \thispagestyle{empty}%
+    }%
+    \@starttoc{toc}%
+    \if@restonecol\twocolumn\fi
+    }
+\let\chaptername=\chapter@su@name
+%\selectlanguage{russian}
+}
+
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                   {2.3ex \@plus.2ex}%
+                                   {\su@sec@title@font\su@sec@size\bfseries\hyphenpenalty\@M\interlinepenalty\@M}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\su@sec@title@font\su@subsec@size\bfseries\hyphenpenalty\@M\interlinepenalty\@M}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\su@sec@title@font\su@subsubsec@size\bfseries\hyphenpenalty\@M\interlinepenalty\@M}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                    {3.25ex \@plus1ex \@minus.2ex}%
+                                    {-1em}%
+                                    {\su@par@title@font\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+                                       {3.25ex \@plus1ex \@minus .2ex}%
+                                       {-1em}%
+                                      {\su@par@title@font\normalsize\bfseries}}
+\renewcommand*{\@seccntformat}[1]{\csname the#1\endcsname .~~}
+
+\frenchspacing
+\righthyphenmin=2
+\lefthyphenmin=2
+
+\fancypagestyle{plain}{%
+\fancyhf{} % clear all header and footer fields
+\fancyfoot[C]{\su@colonsize\thepage} % except the center
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}}
+
+\isu@defgeom{}
+\normalsize
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "dis"
+%%% End:

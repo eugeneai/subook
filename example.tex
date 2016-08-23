@@ -1,0 +1,313 @@
+\documentclass[14pt, openany, twoside, final]{extbook} % Computer Modern font calls
+%\usepackage[usenames]{color}
+%\usepackage{fancybox}
+%\usepackage{algorithmic} % noend
+%\usepackage[boxed]{algorithm} % boxed, ruled, plain (also)
+%\usepackage{longtable}%длинные таблицы
+
+\usepackage[final]{graphicx}
+\usepackage{algorithm}
+
+% Main style definition
+% ---------------------
+% ISU standard handbook
+%\usepackage[fontdir="",handbook,fancybot,times,inconsolata,smalltitles,microtyping]{subook}
+\usepackage[handbook,times,fancybot,inconsolata,smalltitles,microtyping,demo]{subook}
+% remove demo in a real project.
+
+% ISU standard monograph (less restrictive and more artistic)
+% \usepackage[monograph,mag,times,smalltitles,fancybot,listbib,ptfonts,microtyping]{subook}
+
+% Some artistism for monograph
+% ----------------------------
+%\makeatletter{}
+%\renewcommand\su@chapter@font{\sffamily\sfcpshape\bfseries}
+%\renewcommand\su@chapter@font@size{\LARGE}
+%\makeatother{}
+%\floatname{algorithm}{Процедура}
+%\renewcommand{\listalgorithmname}{Список процедур}
+%\renewcommand\cftsecnumwidth{5ex}
+%\tolerance=5000
+%\renewcommand{\chaptername}{Глава}
+
+
+
+\usepackage{tikz}
+%\usetikzlibrary{arrows,arrows.meta,shapes}
+
+\long\def\rem#1{}
+%\def\AR{{\em Прим.~автора~пособия}}
+\def\emphbib#1{#1}
+\newenvironment{questions}{\subsubsection*{Вопросы для самопроверки}\begin{enumerate}\itemsep0pt minus 0.3pt\parskip0pt plus 0.3pt}{\end{enumerate}}
+
+\newtheorem{example}{Пример}[chapter]
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=true,           % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={Рекурсивно-Логическое Программирование},    % title
+    pdfauthor={Евгений Александрович Черкашин},     % author
+    pdfsubject={Методическое пособие},   % subject of the document
+    pdfcreator={LaTeX},   % creator of the document
+    pdfproducer={LaTeX}, % producer of the document
+    pdfkeywords={Пролог} {Искусственный интеллект} {Планирование действий}, % list of keywords
+    pdfnewwindow=true,      % links in new window
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=[rgb]{0 0.4 0.1},          % color of internal links (black)
+    citecolor=blue,        % color of links to bibliography
+    filecolor=black,      % color of file links
+    urlcolor=[rgb]{0.3 0.0 0.3}           % color of external links
+}
+
+%\renewcommand{\headrulewidth}{1pt}
+
+\clubpenalty=3000
+\widowpenalty=3000
+%\brokenpenalty=10000
+%\floatingpenalty=10000
+
+%% \setdefaultlanguage{russian}
+%% \setmainlanguage{russian}
+%% \setotherlanguage{english}
+
+\renewcommand\baselinestretch{1.1}
+\parskip=0pt plus 0.3pt
+\begin{document}
+% \itemsep3pt plus 0pt minus 3pt
+% \widowpenalty=10000
+% \clubpenalty=10000
+% \renewcommand\sutitlefontface{\Large\ptsans\nwshape\bfseries}
+% \theorembodyfont{\rmfamily}
+
+\lstset{language=Prolog, morecomment=[l]{\%}}
+\renewcommand{\chaptername}{} % for ISU Handbooks
+\renewcommand{\refname}{Рекомендуемая литература} % ... also
+\renewcommand{\bibname}{\refname}
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{center}{\small{}
+Министерство образования и науки
+Российской федерации \\
+Федеральное государственное бюджетное образовательное\\
+учреждение высшего профессионального образования\\
+<<Иркутский государственный университет>>\\[2ex]
+    Учреждение Российской академии наук \\
+<<Институт динамики систем и теории управления \\
+Сибирского отделения РАН>>
+}
+\vfill
+\hbox to \linewidth{\hfill\bfseries Е.~А.~Черкашин\hfill}
+ \vspace{2em}
+{\large\bfseries Рекурсивно"=логическое программирование}\\
+ \vspace{2em}
+{Учебное пособие}
+\vfill
+%\vfill
+\vfill
+ \textbf{Иркутск 2013}
+\end{center}
+\end{titlepage}
+%\newpage
+%\begingroup
+%\normalfont \ttfamily Это \textbf{текст} в \itshape нормальном \bfseries фонте\sffamily етноф\nwshape фонт\rmcpshape тноф\sfcpshape фонт\ttfamily тноф...
+%\endgroup
+
+\newpage
+\begin{mygroup}
+\thispagestyle{empty}
+\noindent УДК 681.3.06 (075.8)\\ % (075.8) = Handbook
+% \noindent УДК~165:681.3.06+62-52\\
+
+% Программирование для ЭВМ--Учебники и пособия для вузов
+\noindent ББК 32.973-01я73\\ % я73 - Учебник для вузов -01=
+
+% 86.4 = Логика
+% 32.973 = Программное обеспечение
+% 32.813 = Искусственный интеллект
+% -01 =
+% ББК 87.4:32.973-01+32.813\\ % monograph
+\noindent\mbox{}\hspace{2em}Ч-48 % Author Sign (Авторский знак)
+
+\begin{center}\small
+Печатается по решению ученого совета ИМЭИ\\[2ex]
+\bfseries Издание выходит в рамках Программы\\
+стратегического развития ФГБОУ ВПО <<ИГУ>>\\
+на 2012--2016 гг., проект Р121-02-001
+\end{center}
+\vspace{1ex}
+\begin{center}\small
+\textbf{Рецензенты:} \\
+канд.~техн.~наук~{\em В.~С.~Ульянов},\\ канд.~физ.-мат.~наук~{\em А.~А.~Лемперт}
+\end{center}
+\vfill
+\noindent\begin{minipage}[t]{2em}
+\noindent\mbox{}\\
+Ч-48
+\end{minipage}%
+\begin{minipage}[t]{0.95\linewidth}
+\setlength{\parindent}{5ex}
+\noindent{\bfseries Черкашин~Е.~А.}
+
+Рекурсивно"=логическое программирование\,{}: учеб.~пособие\,/~Е.~А.~Черкашин.~--
+Иркутск\,: Изд-во ИГУ, 2013.~-- \pageref{lastpage}~c.
+
+{\bfseries ISBN 978-5-9624-0938-2}
+\vspace{2ex}
+
+\begingroup\small\parskip0pt
+\vspace{1ex}
+В пособии представлены лекционные материалы и лабораторные работы курса <<Рекурсивно"=логическое программирование>>: базовые термины искусственного интеллекта, задачи, методы и их свойства; основы рекурсивно"=логического программирования на языке Пролог; типичные задачи, решение которых лаконично представляется как рекурсивные и переборные алгоритмы. Пособие содержит задания на лабораторный практикум по темам <<Формализация>>, <<Обработка списков>>, <<Метод Британского музея (отобразить и проверить)>> и <<Базы данных>>.
+
+    Пособие предназначено для студентов специальности <<инженер"=программист>>, <<инженер\,---\,системный программист>>. Изучение материала будет полезно студентами других специальностей, так или иначе связанных с программированием, формальной логикой и комбинаторикой.
+
+\mbox{}
+\endgroup
+\end{minipage}
+\mbox{}\hspace{0.7\linewidth}
+\begin{minipage}{0.3\linewidth}\small
+\noindent УДК 681.3.06 (075.8)\\
+\noindent ББК 32.973-01я73
+\end{minipage}
+
+\vfill
+\noindent\begin{minipage}[t]{0.35\linewidth}\small
+\noindent ISBN 978-5-9624-0938-2
+\end{minipage}%
+\begin{minipage}[t]{0.65\linewidth}\small
+\begin{itemize}
+\setlength{\itemsep}{-0.5ex}
+\setlength{\parsep}{0pt}
+\item[\copyright{}] Черкашин~Е.~А., 2014
+\item[\copyright{}] ФГБОУ ВПО <<ИГУ>>, 2014
+%\item[\copyright{}] ФГБОУ ВПО НИ ИрГТУ, 2014 % TODO: Check the name
+\item[\copyright{}] Институт динамики систем и теории управления СО РАН, 2014
+\end{itemize}
+\end{minipage}
+\end{mygroup}
+\clearpage
+%\setcounter{page}{2}
+\tableofcontents
+\clearpage
+
+\newpage
+\chapter*{Предисловие}
+
+
+
+Автор является приверженцем открытых технологий, свободных книг, научного метода познания мира и открытого программного обеспечения. Адрес исходного кода методического пособия~--- \url{https://github.com/eugeneai/ais/tree/new-isu}. Исхоный код разрешено использовать в соответствии с лицензией  \foreignlanguage{english}{CC BY-NC-SA 4.0 (Attribution-NonCommercial-ShareAlike 4.0 International)}, которая разрешает использование материала в своих произведениях (необходимо указывать автора оригинальных материалов), запрещает коммерческое использование материалов (ввиду наличия вышеперечисленных заимствований) и требует распространение производных материалов производить по этой же самой лицензии (по предыдущей причине). Адрес лицензии~---  \url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
+
+В тексте пособия использована следующая разметка:
+\begin{description}
+\item[Жирным шрифтом] выделяются имена существительные и глаголы, на которые, по мнению автора, следует обратить внимание, это~--- что-то вроде дополнительной семантической разметки текста учебного пособия.
+\item[\normalfont{\tt Моноширинным шрифтом}] приводятся программы, отрывки программ в основном тексте пособия, а также имена идентификаторов, т.~е. все, что имеет какое"=либо отношение к {\bf тексту программы}.
+\item[\normalfont{\em Наклонным шрифтом}] выделяются {\bf новые} термины, вводимые в текст и возникающие, например, в определениях, а также текст выделенных примеров.
+\item[\normalfont При помощи <<кавычек>>] выделяются метафоры, значения, элементы текстов программ, цитаты, слова, использованные в переносном смысле, и т.~д.
+%\item[\normalfont{\sf Рубленым шрифтом}] декорируются тексты, которые надо как-то особо выделить на общем фоне.
+\end{description}
+
+\medskip
+\noindent\hbox to \linewidth{\hfill\sf Старший~научный сотрудник ИДСТУ СО РАН,}
+\noindent\hbox to \linewidth{\hfill\sf доцент кафедры ИТ ИМЭИ ИГУ}
+\noindent\hbox to \linewidth{\hfill\sf кандидат~технических~наук}
+\noindent\hbox to \linewidth{\hfill\sf Е.~А.~Черкашин}
+%\noindent\hbox to \linewidth{\hfill\sf аспирант кафедры ИТ ИМЭИ ИГУ}
+%\noindent\hbox to \linewidth{\hfill\sf И.~Н.~Терехин}
+
+\vfill
+\makeatletter
+\noindent{\sf P.~S.} Автора всегда можно найти по адресу \href{mailto:eugeneai@icc.ru}{\tt{}eugeneai@icc.ru}, в поле <<{\tt тема}>> прошу указывать <<TODO-2013>>.
+\makeatother
+
+\chapter{Раздел}
+
+
+\section{Терминология...}
+
+
+\subsection{И т.п.}
+
+
+\begin{questions}
+\item{} Перечислите .....
+\item{} Дайте характеристику ...
+\item{} В чем суть ....
+\item{} Приведите ...
+\item{} Какие ...
+\end{questions}
+
+\chapter{Другой раздел}
+
+
+\chapter*{Заключение}
+
+
+Изучение ...
+
+В книге ...
+
+
+%\listoffigures
+%\addcontentsline{toc}{section}{Список иллюстраций}
+%\listoftables
+%\addcontentsline{toc}{section}{Список таблиц}
+\begin{thebibliography}{99}\itemsep1pt \parskip 0pt plus 0.3pt
+\bibitem{Anderson} Андерсон~Р. \emphbib{Доказательство правильности программ}\,{}: пер. с англ.\,{}/ Р.~Андерсон. -- М.\,:\,Мир, 1982. -- 168~c.: ил.
+\bibitem{Bratko} Братко~И. \emphbib{\href{http://royallib.ru/book/bratko_ivan/programmirovanie_na_yazike_prolog_dlya_iskusstvennogo_intellekta.html}{Программирование на языке ПРОЛОГ для искусственного интеллекта}}\,{}: пер. с англ.\,/ И.~Братко. -- М.\,:~Мир, 1990. -- 560~c.: ил.
+\bibitem{Vass:2000} Васильев~С.~Н. \emphbib{\href{http://bookfi.org/book/616050}{Интеллектное управление динамическими системами}}\,{}/ С.~Н.~Васильев, А.~К.~Жерлов, Е.~А.~Федосов, Б.~Е.~Федунов. -- М.\,:~Физматлит, 2000. -- 352~с: ил.
+\bibitem {AIDictionary} \emphbib{\href{http://aihandbook.intsys.org.ru/index.php/intro/ai-handbook}{Искусственный интеллект\,{}: в 3~кн.}}\,{}/ под ред. Э.~В. Попова. -- М.\,:~Радио и связь, 1990. -- 464 c.:\,{}ил.
+\bibitem{Lauriere} Лорьер.~Ж.-Л.  \emphbib{\href{http://publ.lib.ru/ARCHIVES/L/LOR'ER_Jan_Lui/_Lor'er_J.L..html}{Системы искусственного интеллекта}\,{}: пер. с франц.}\,{}/ Ж.-Л. Лорьер. -- М.\,:~Мир, 1991. -- 568~с.: ил.
+\bibitem{Malpas} Малпас~Дж. \emphbib{\href{http://padaread.com/?book=40731&pg=1}{Реляционный язык Пролог и его применение}}\,{}/ Дж.~Малпас. -- М.\,:~Наука, 1990. -- 464~с.
+\bibitem{math_slov:88} \emphbib{\href{https://app.box.com/shared/793ukgvblxmj0hh6btw4}{Математический энциклопедический словарь}}\,{}/ гл.~ред. Ю.~В.~Прохоров. -- М.\,:~Сов.~энциклопедия, 1988. -- 847~c.
+\bibitem{DDW} Непейвода~Н.~Н. \emphbib{\href{http://www.logic-books.info/taxonomy/term/215}{Прикладная логика\,{}: учеб. пособие}}\,{}/ Н.~Н.~Непейвода. -- 2-е изд. -- Новосибирск\,{}:~Изд-во Новосиб. ун-та, 2000. -- 521~c.: ил.
+\bibitem{DDWII} Непейвода~Н.~Н.  \emphbib{\href{http://philosophy.ru/library/logic_math/library/nepeivoda_prog.pdf}{Основания программирования}}\,{}/ Н.~Н.~Непейвода, И.~Н.~Скопин. -- Москва; Ижевск\,{}:~Институт компьютерных исследований, 2003 -- 880~c.: ил.
+\bibitem {Russell} Рассел~С. \href{http://www.aiportal.ru/downloads/books/ai-modern-approach-2-edition-by-rassel-norvig.html}{Искусственный интеллект: современный подход}\,{}: пер. с англ.\,{}/ С.~Рассел, П.~Новриг. 2-е изд. -- М.\,:~Изд. дом <<Вильямс>>, 2006. -- 1408~c.: ил.
+\bibitem{WIKI-DCG} \emphbib{\href{https://en.wikipedia.org/wiki/Definite_clause_grammar}{DC-грамматика}} [Электронный ресурс]\,{}// Wikipedia, The Free Encyclopedia\,{}: сайт. -- URL:\texttt{https://en.wikipedia.org/wiki/Definite\_clause\linebreak\_grammar}. (дата обращения: 28.11.2013).
+\bibitem{GNUP} \emphbib{\href{http://www.gprolog.org/}{The GNU Prolog web site [Электронный ресурс]\,{}: сайт}}. URL:\url{http://www.gprolog.org/}. (дата обращения: 28.11.2013).
+\bibitem{SWIP} \emphbib{\href{http://www.swi-prolog.org/}{SWI-Prolog's home [Электронный ресурс]\,{}: сайт}}. URL:\url{http://www.swi-prolog.org/}. (дата обращения: 28.11.2013).
+\end{thebibliography}
+\label{lastpage}
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+\vfill\vfill\vfill\vfill
+
+\hfill{}{\small\itshape Учебное издание}
+\vspace{4ex}
+\begin{center}
+{\small\textbf{Черкашин} Евгений Александрович\\[1em]}
+{\bfseries Рекурсивно"=логическое программирование}\\[1em]
+ISBN~978-5-9624-0938-2
+\vfill
+
+\small
+Редактор \textit{Г.~А.~Борисова}\\
+Верстка \textit{Е.~А.~Черкашин}
+
+\vfill{}
+{\small Макет подготовлен при помощи системы \LuaLaTeX\\\mbox{}}
+\vfill{}
+
+Темплан 2013\,{}г. Поз.\,{}186
+
+\end{center}
+\begin{center}\small
+\noindent Подписано в печать 28.12.2013.
+Формат~60$\times$90 1/16.\\  %Гарнитура \sutypeface{}.
+%Верстка \LuaLaTeXe.
+%Бумага офсетная. Печать офсетная. Усл.печ.л.
+Уч.-изд.\,{}л.\,{}6,4. Усл.\,{}печ.\,{}л. 6,8. Тираж~100~экз. Заказ~170
+\end{center}
+\vspace{1           ex}
+\begin{center}\small
+Издательство ИГУ\\{}
+664003, г.\,{}Иркутск, бульвар Гагарина, 36
+\end{center}
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Local Variables:
+%%% TeX-engine: lualatex
+%%% End:
