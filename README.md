@@ -6,17 +6,17 @@ I try to develop a package for LuaTeX with Soviet Union publishing traditions an
 
 1. Check where Your local texmf directory must reside (consult [here](http://tex.stackexchange.com/questions/1137/where-do-i-place-my-own-sty-or-cls-files-to-make-them-available-to-all-my-te)):
     
-    kpsewhich -var-value=TEXMFHOME
+    ```kpsewhich -var-value=TEXMFHOME```
 
 1. clone the repo inside this directory and subdirectory tex/latex, e.g.
 
-    mkdir -p ~/texmf/tex/latex
+    ```mkdir -p ~/texmf/tex/latex
     cd ~/texmf/tex/latex
-    git clone https://github.com/eugeneai/subook.git
+    git clone https://github.com/eugeneai/subook.git```
     
 2. Check if subook.sty could be found:
 
-    kpsewhich subook.sty
+    ```kpsewhich subook.sty```
 
 3. Install fonts according to [instruction](https://github.com/eugeneai/ttf-otf-font-set).
 
