@@ -77,7 +77,7 @@
 \def\sbk@fontpath{subook/}
 
 \DeclareOption{demo}{%
-\def\sbk@fontpath{./}%
+\fontdef\sbk@fontpath{./}%
 }
 
 \DeclareOption{a4paper}{
@@ -176,7 +176,6 @@
 \def\su@set@xitsmathfont{\setmathfont[
 Ligatures=TeX,
 Scale=MatchLowercase,
-Path=\sbk@fontpath XITS/,
 BoldFont=xits-mathbold.otf
 ]{xits-math.otf}%
 }
@@ -184,7 +183,6 @@ BoldFont=xits-mathbold.otf
 \def\su@set@cambriamathfont{\setmathfont[
 Ligatures=TeX,
 Scale=MatchLowercase,
-Path=\sbk@fontpath Microsoft/
 ]{Cambria-Math.ttf}%
 }
 
@@ -196,14 +194,12 @@ Scale=MatchLowercase
 
 \def\su@set@asanamathfont{\setmathfont[
 Ligatures=TeX,
-Path=\sbk@fontpath,
 Scale=MatchLowercase
 ]{Asana-Math.otf}%
 }
 
 \def\su@set@eulermathfont{\setmathfont[
 Ligatures=TeX,
-Path=\sbk@fontpath Euler/,
 Scale=MatchLowercase,
 math-style=upright,
 vargreek-shape=unicode
@@ -242,7 +238,6 @@ vargreek-shape=unicode
 \else
 \setmainfont[Ligatures=TeX,
 Scale=\su@scale,
-Path=\sbk@fontpath Microsoft/,
 ItalicFont=timesi.ttf,
 BoldFont=timesbd.ttf,
 BoldItalicFont=timesbi.ttf,
@@ -251,7 +246,6 @@ BoldItalicFont=timesbi.ttf,
 Ligatures=TeX,
 Scale=MatchLowercase,Numbers=SlashedZero,
 Scale=\su@scale,
-Path=\sbk@fontpath Microsoft/,
 ItalicFont=couri.ttf,
 BoldFont=courbd.ttf,
 BoldItalicFont=courbi.ttf,
@@ -260,7 +254,6 @@ BoldItalicFont=courbi.ttf,
 Ligatures=TeX,
 Scale=MatchLowercase,
 Scale=\su@scale,
-Path=\sbk@fontpath Microsoft/,
 ItalicFont=calibrii.ttf,
 BoldFont=calibrib.ttf,
 BoldItalicFont=calibriz.ttf,
@@ -275,14 +268,12 @@ BoldItalicFont=calibriz.ttf,
 \else
 \setmainfont[
   Scale=\su@scale,
-  Path=\sbk@fontpath Public-Type/,
   BoldFont=PTF75F.ttf,
   ItalicFont=PTF56F.ttf,
   BoldItalicFont=PTF76F.ttf
 ]{PTF55F.ttf}
 
 \setsansfont[
-  Path=\sbk@fontpath Public-Type/,
   BoldFont=PTS75F.ttf,
   ItalicFont=PTS56F.ttf,
   BoldItalicFont=PTS76F.ttf,
@@ -290,25 +281,21 @@ BoldItalicFont=calibriz.ttf,
 ]{PTS55F.ttf}
 
 \newfontface\nwshape[ % Narrow Shape for PT Sans
-  Path=\sbk@fontpath Public-Type/,
   BoldFont=PTN77F.ttf,
   Scale=MatchLowercase,
 ]{PTN57F.ttf}
 
 \newfontface\sfcpshape[ % Caption Shape for PT Sans
-  Path=\sbk@fontpath Public-Type/,
   BoldFont=PTC75F.ttf,
   Scale=MatchLowercase
 ]{PTC55F.ttf}
 
 \newfontface\rmcpshape[ % Caption Shape for PT Sans
-  Path=\sbk@fontpath Public-Type/,
   ItalicFont=PTZ56F.ttf,
   Scale=MatchLowercase
 ]{PTZ55F.ttf}
 
 \setmonofont[Ligatures=TeX,Scale=MatchLowercase,Numbers=SlashedZero,
-  Path=\sbk@fontpath Public-Type/,
   BoldFont=PTM75F.ttf,
   Scale=MatchLowercase
 ]{PTM55F.ttf}
@@ -322,20 +309,17 @@ BoldItalicFont=calibriz.ttf,
 \else
 \setmainfont[
   Scale=\su@scale,
-  Path=\sbk@fontpath Liberation/fonts/,
   BoldFont=LiberationSerif-Bold.ttf,
   ItalicFont=LiberationSerif-Italic.ttf,
   BoldItalicFont=LiberationSerif-BoldItalic.ttf
 ]{LiberationSerif-Regular.ttf}
 \setsansfont[
   Scale=\su@scale,
-  Path=\sbk@fontpath Liberastika/,
   BoldFont=Liberastika-Bold.ttf,
   ItalicFont=Liberastika-Italic.ttf,
   BoldItalicFont=Liberastika-BoldItalic.ttf
 ]{Liberastika-Regular.ttf}
 \setmonofont[Ligatures=TeX,Scale=MatchLowercase,Numbers=SlashedZero,
-  Path=\sbk@fontpath Liberation/fonts/,
   Scale=MatchLowercase,
   BoldFont=LiberationMono-Bold.ttf,
   ItalicFont=LiberationMono-Italic.ttf,
@@ -358,14 +342,12 @@ BoldItalicFont=calibriz.ttf,
 \else
 \newfontfamily\ptserif[
   Scale=\su@scale,
-  Path=\sbk@fontpath Public-Type/,
   BoldFont=PTF75F.ttf,
   ItalicFont=PTF56F.ttf,
   BoldItalicFont=PTF76F.ttf
 ]{PTF55F.ttf}
 
 \newfontfamily\ptsans[
-  Path=\sbk@fontpath Public-Type/,
   BoldFont=PTS75F.ttf,
   ItalicFont=PTS56F.ttf,
   BoldItalicFont=PTS76F.ttf,
@@ -373,25 +355,21 @@ BoldItalicFont=calibriz.ttf,
 ]{PTS55F.ttf}
 
 \newfontface\nwshape[ % Narrow Shape for PT Sans
-  Path=\sbk@fontpath Public-Type/,
   BoldFont=PTN77F.ttf,
   Scale=MatchLowercase,
 ]{PTN57F.ttf}
 
 \newfontface\sfcpshape[ % Caption Shape for PT Sans
-  Path=\sbk@fontpath Public-Type/,
   BoldFont=PTC75F.ttf,
   Scale=MatchLowercase
 ]{PTC55F.ttf}
 
 \newfontface\rmcpshape[ % Caption Shape for PT Sans
-  Path=\sbk@fontpath Public-Type/,
   ItalicFont=PTZ56F.ttf,
   Scale=MatchLowercase
 ]{PTZ55F.ttf}
 
 \newfontfamily\ptmono[Ligatures=TeX,Scale=MatchLowercase,Numbers=SlashedZero,
-  Path=\sbk@fontpath Public-Type/,
   BoldFont=PTM75F.ttf,
   Scale=MatchLowercase
 ]{PTM55F.ttf}
@@ -410,7 +388,6 @@ BoldItalicFont=calibriz.ttf,
 \else
 \setmainfont[
   Ligatures={TeX},
-  Path=\sbk@fontpath Literaturnaya/,
   BoldFont=7131157.ttf,
   ItalicFont=5131162.ttf,
   BoldItalicFont=6131147.ttf,
@@ -420,7 +397,6 @@ BoldItalicFont=calibriz.ttf,
 \DeclareOption{qa}{
 \setmainfont[
 Ligatures={TeX},
-Path=\sbk@fontpath,
 BoldFont=quantantiquabold.ttf,
 ItalicFont=quantantiquaitalic.ttf,
 BoldItalicFont=quantantiquabolditalic.ttf,
@@ -436,7 +412,6 @@ BoldItalicFont=quantantiquabolditalic.ttf,
 \setmonofont[Ligatures=TeX,
 Scale=MatchLowercase,
 Numbers=SlashedZero,
-Path=\sbk@fontpath Fira/otf/,
 BoldFont=FiraMono-Bold.otf
 ]{FiraMono-Regular.otf}
 \fi
@@ -445,7 +420,6 @@ BoldFont=FiraMono-Bold.otf
 \ifPDFTeX\relax
 \else
 \setsansfont[Ligatures=TeX,Scale=MatchLowercase,
-  Path=\sbk@fontpath Fira/otf/,
 BoldFont=FiraSans-Bold.otf,
 ItalicFont=FiraSans-Italic.otf,
 BoldItalicFont=FiraSans-BoldItalic.otf
@@ -457,8 +431,6 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 \ifPDFTeX\relax
 \else
 \setmonofont[
-  Path=\sbk@fontpath Inconsolata-LGC/,
-%  Path=Inconsolata-LGC/,
   Scale=MatchLowercase,
 %  Ligatures={TeX},
   Numbers=SlashedZero,
@@ -685,7 +657,6 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 % \setmathfont[
 % Ligatures=TeX,
 % Scale=MatchLowercase,
-% Path=\sbk@fontpath XITS/,
 % BoldFont=xits-mathbold.otf
 % ]{xits-math.otf}
 
