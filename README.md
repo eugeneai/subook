@@ -18,7 +18,8 @@ git clone https://github.com/eugeneai/subook.git
 ```
 kpsewhich subook.sty
 ```
-4. Install fonts according to [instruction](https://github.com/eugeneai/ttf-otf-font-set).
+4. Install fonts according to [instruction](https://github.com/eugeneai/ttf-otf-font-set). 
+   You also can add other fonts to be available for publishing.
 
 ## Additional references
 
