@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{subook}[2015/08/20 State University (Soviet Union) Book]
 \RequirePackage{iftex}
-%\RequirePackage{etoolbox}
+\RequirePackage{etoolbox}
 %\RequirePackage{kvoptions}
 \ifPDFTeX\relax
  %\RequirePackage{newtxtext}
@@ -81,7 +81,9 @@
 \let\headwidth=\textwidth
 }
 
+\providecommand{\chapter@su@name}{Глава}
 \renewcommand{\chapter@su@name}{Глава}
+
 \DeclareOption{a5paper}{
 \geometry{paper=a5paper, twoside, inner=2cm, outer=1.8cm, top=1.7cm, bottom=1.9cm}
 }
@@ -179,7 +181,7 @@ BoldFont=xits-mathbold.otf
 \def\su@set@cambriamathfont{\setmathfont[
 Ligatures=TeX,
 Scale=MatchLowercase,
-]{Cambria-Math.ttf}%
+]{Cambria Math}%
 }
 
 \def\su@set@lmmathfont{\setmathfont[
@@ -564,12 +566,14 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 
 % adjustenment of the title sizes.
 \renewcommand\cftpartaftersnum{.}
+\providecommand\cftchapaftersnum{.}
 \renewcommand\cftchapaftersnum{.}
 \renewcommand\cftsecaftersnum{.}
 \renewcommand\cftsubsecaftersnum{.}
 \renewcommand\cftsubsubsecaftersnum{.}
 %% %\renewcommand\ctfchapfont{\large\bf}
 \renewcommand\cftpartnumwidth{3ex}
+\providecommand\cftchapnumwidth{3ex}
 \renewcommand\cftchapnumwidth{3ex}
 \renewcommand\cftsecnumwidth{4ex}
 \renewcommand\cftsubsecnumwidth{6ex}
