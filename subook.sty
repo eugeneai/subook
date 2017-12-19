@@ -667,8 +667,9 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 \AtBeginDocument{
 \pagenumbering{arabic}
 \normalsize
+\DeclareCaptionLabelSeparator{periodnewline}{.\\}
 \captionsetup[figure]{labelformat=simple,labelsep=period,font=small,labelfont={bf,small},textfont={small,it},format=hang,margin=3ex,justification=justified,singlelinecheck=false}
-\captionsetup[table]{format=rightcenter,labelsep=newline,singlelinecheck=off,font={small},labelfont={small,bf},textfont={small}, skip=0.2ex}
+\captionsetup[table]{format=rightcenter,labelsep=periodnewline,singlelinecheck=on,font={normalfont},labelfont={small,bf},textfont={normalfont,it},justification=raggedleft,skip=0.2ex}
 %\captionsetup[table]{format=plain,labelsep=newline,singlelinecheck=off,justification=Centering} %%%% THIS IS just CENTERED
 \renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\thechapter.\ #1}}{\MakeUppercase{\thechapter.\ #1}}}
 \renewcommand{\sectionmark}[1]{\markright{\MakeUppercase{\thesection.\ #1}}{}}
