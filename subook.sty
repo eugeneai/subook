@@ -29,8 +29,10 @@
 \RequirePackage{caption}
 \RequirePackage{pageslts}
 \RequirePackage{tocloft}
+\RequirePackage{calc}
 \RequirePackage{secdot}
 \RequirePackage{cmap}
+\RequirePackage{appendix}
 \RequirePackage[final]{hyperref}
 \RequirePackage[sort&compress]{natbib} % Adjusting \cite's
 %\RequirePackage{hypernat}
@@ -131,11 +133,14 @@
 %\DeclareStringOption[subook/]{fontdir}
 
 \DeclareOption{monograph}{
-\setcitestyle{numbers,square,semicolon}
+  \setcitestyle{numbers,square,semicolon}
+  \renewcommand{\thechapter}{\arabic{chapter}.}
 }
 \DeclareOption{handbook}{
 \setcitestyle{numbers,square,comma}
 \renewcommand{\chapter@su@name}{}
+  \renewcommand{\thechapter}{\arabic{chapter}.}
+
 }
 \DeclareOption{fancytop}{
 %\fancypagestyle{plain}{%
@@ -205,6 +210,7 @@ vargreek-shape=unicode
 }
 
 \newif\if@loadxitsmath\@loadxitsmathfalse
+\newif\if@loadgostseventhreetwo\@loadgostseventhreetwofalse
 \DeclareOption{xitsmath}{
 \@loadxitsmathtrue
 \def\su@set@mathfont{\su@set@xitsmathfont}
@@ -474,6 +480,45 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 \renewcommand{\baselinestretch}{1.0}
 }
 
+\DeclareOption{732}{
+  % GOST 7.32
+  \@loadgostseventhreetwotrue
+  \renewcommand{\chaptername}{ГЛАВА}
+  \renewcommand{\chapter@su@name}{ГЛАВА}
+  \renewcommand{\contentsname}{ОГЛАВЛЕНИЕ}
+  \pagestyle{plain}
+  \renewcommand\bibsection{%
+    \chapter{\bibname}%
+    \@mkboth{\MakeUppercase{\bibname}}{\MakeUppercase{\bibname}}%
+  }%
+  \providecommand{\appendices}{}
+  \renewcommand{\appendices}{%
+    \renewcommand{\thechapter}{\Asbuk{chapter}}
+    \setcounter{chapter}{0}
+    \renewcommand\chaptername{ПРИЛОЖЕНИЕ}
+    \renewcommand{\chapter@su@name}{ПРИЛОЖЕНИЕ}
+    %\renewcommand\cftchappresnum{\chapter@su@name~}
+  }
+  \renewcommand{\thechapter}{\arabic{chapter}}
+  \def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+                         \refstepcounter{chapter}%
+                         \typeout{\@chapapp\space\thechapter.}%
+                         \addcontentsline{toc}{chapter}%
+                                   {\chaptername\space\protect\numberline{\thechapter}#1}%
+                    \else
+                      \addcontentsline{toc}{chapter}{#1}%
+                    \fi
+                    \chaptermark{#1}%
+                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+                    \if@twocolumn
+                      \@topnewpage[\@makechapterhead{#2}]%
+                    \else
+                      \@makechapterhead{#2}%
+                      \@afterheading
+                    \fi}
+}
+
 \ExecuteOptions{a5paper,handbook,fancybot,times,cambriamath,firamono,smalltitles,listbib,microtyping,final}
 
 %\ProcessKeyvalOptions{subook}\relax
@@ -506,7 +551,7 @@ BoldItalicFont=FiraSans-BoldItalic.otf
          \else
            \@chapapp\space
          \fi
-         \thechapter.\hbox to 0.3em {}  % Trimmed here
+         \thechapter\hbox to 0.3em {}  % Trimmed here
         \nobreak
     \fi
     }%
@@ -565,12 +610,7 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 \renewcommand{\baselinestretch}{1.0}
 
 % adjustenment of the title sizes.
-\renewcommand\cftpartaftersnum{.}
-\providecommand\cftchapaftersnum{.}
-\renewcommand\cftchapaftersnum{.}
-\renewcommand\cftsecaftersnum{.}
-\renewcommand\cftsubsecaftersnum{.}
-\renewcommand\cftsubsubsecaftersnum{.}
+
 %% %\renewcommand\ctfchapfont{\large\bf}
 \renewcommand\cftpartnumwidth{3ex}
 \providecommand\cftchapnumwidth{3ex}
@@ -668,11 +708,30 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 \pagenumbering{arabic}
 \normalsize
 \DeclareCaptionLabelSeparator{periodnewline}{.\\}
+\DeclareCaptionLabelSeparator{ddash}{~\cyrdash~}
+
+\if@loadgostseventhreetwo
+
+\captionsetup[figure]{labelformat=simple,labelsep=ddash,font=small,labelfont={small},textfont={footnotesize},format=hang,margin=3ex,justification=justified,singlelinecheck=false}
+\captionsetup[table]{format=hang,labelsep=ddash,singlelinecheck=on,font={small},labelfont={small},textfont={small},labelfont={normalfont},justification=justified,skip=0.2ex}
+% \captionsetup[table]{format=plain,labelsep=newline,singlelinecheck=off,justification=Centering} %%%% THIS IS just CENTERED
+  \renewcommand\tablename{Таблица}
+  \renewcommand\figurename{Рисунок}
+  \renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\thechapter\ #1}}{\MakeUppercase{\thechapter\ #1}}}
+\renewcommand{\sectionmark}[1]{\markright{\MakeUppercase{\thesection\ #1}}{}}
+\pagestyle{plain}
+\renewcommand{\contentsname}{ОГЛАВЛЕНИЕ}
+
+\else
+
 \captionsetup[figure]{labelformat=simple,labelsep=period,font=small,labelfont={bf,small},textfont={small,it},format=hang,margin=3ex,justification=justified,singlelinecheck=false}
 \captionsetup[table]{format=rightcenter,labelsep=periodnewline,singlelinecheck=on,font={normalfont},labelfont={small,bf},textfont={normalfont,it},justification=raggedleft,skip=0.2ex}
-%\captionsetup[table]{format=plain,labelsep=newline,singlelinecheck=off,justification=Centering} %%%% THIS IS just CENTERED
 \renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\thechapter.\ #1}}{\MakeUppercase{\thechapter.\ #1}}}
 \renewcommand{\sectionmark}[1]{\markright{\MakeUppercase{\thesection.\ #1}}{}}
+
+\fi
+
 \renewcommand\tableofcontents{%
     \if@twocolumn
       \@restonecoltrue\onecolumn
@@ -689,7 +748,35 @@ BoldItalicFont=FiraSans-BoldItalic.otf
     \if@restonecol\twocolumn\fi
     }
 \let\chaptername=\chapter@su@name
-%\selectlanguage{russian}
+% \selectlanguage{russian}
+
+\if@loadgostseventhreetwo
+
+\if@cfthaspart
+\renewcommand\cftpartaftersnum{}
+\fi
+\if@cfthaschapter
+\renewcommand\cftchapaftersnum{}
+%\renewcommand\cftchappresnum{\chaptername\space}
+%\renewcommand\cftchappresnum{\chapter@su@name\space}
+%\setlength{\cftchapnumwidth}{\widthof{\textbf{\chapter@su@name ~99~}}}
+\fi
+\renewcommand\cftsecaftersnum{}
+\renewcommand\cftsubsecaftersnum{}
+\renewcommand\cftsubsubsecaftersnum{}
+
+\else
+
+\renewcommand\cftpartaftersnum{.}
+\providecommand\cftchapaftersnum{.}
+\renewcommand\cftchapaftersnum{.}
+\renewcommand\cftsecaftersnum{.}
+\renewcommand\cftsubsecaftersnum{.}
+\renewcommand\cftsubsubsecaftersnum{.}
+
+\fi
+
+
 }
 
 \renewcommand\section{\@startsection{section}{1}{\z@}%
@@ -712,7 +799,15 @@ BoldItalicFont=FiraSans-BoldItalic.otf
                                        {3.25ex \@plus1ex \@minus .2ex}%
                                        {-1em}%
                                       {\su@par@title@font\normalsize\bfseries}}
+\if@loadgostseventhreetwo
+
+\renewcommand*{\@seccntformat}[1]{\csname the#1\endcsname ~~}
+
+\else
+
 \renewcommand*{\@seccntformat}[1]{\csname the#1\endcsname .~~}
+
+\fi
 
 \frenchspacing
 \righthyphenmin=2
