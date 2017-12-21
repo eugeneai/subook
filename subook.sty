@@ -68,6 +68,7 @@
 \def\su@subsubsec@size{\normalsize}
 \newcommand\sutypeface{Computer Modern}
 \newcommand\sufontfamily{\sutypeface}
+\let\su@sec@indent\z@
 
 \setcitestyle{numbers,square}
 \def\isu@defgeom{\geometry{}}
@@ -516,7 +517,10 @@ BoldItalicFont=FiraSans-BoldItalic.otf
                     \else
                       \@makechapterhead{#2}%
                       \@afterheading
-                    \fi}
+                      \fi}
+                    \renewcommand\baselinestretch{1.2} % 1.5 looks bad
+                    \setlength{\parindent}{1.27cm}
+                    \let\su@sec@indent\parindent
 }
 
 \ExecuteOptions{a5paper,handbook,fancybot,times,cambriamath,firamono,smalltitles,listbib,microtyping,final}
@@ -596,7 +600,6 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 
 %\renewcommand{\publishername}{Иркутский государственный технический университет}
 %\renewcommand{\locationname}{Иркутск}
-\def\baselinestretch{1.0}
 
 \@ifpackageloaded{amsthm}{}{
 \theoremseparator{.}
@@ -607,7 +610,7 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
 % - ISDCT SB RAS Dissertation package -----
-\renewcommand{\baselinestretch}{1.0}
+%\renewcommand{\baselinestretch}{1.0}
 
 % adjustenment of the title sizes.
 
@@ -779,18 +782,18 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 
 }
 
-\renewcommand\section{\@startsection{section}{1}{\z@}%
+\renewcommand\section{\@startsection{section}{1}{\su@sec@indent}%
                                    {-3.5ex \@plus -1ex \@minus -.2ex}%
                                    {2.3ex \@plus.2ex}%
-                                   {\su@sec@title@font\su@sec@size\bfseries\hyphenpenalty\@M\interlinepenalty\@M}}
-\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+                                   {\su@sec@title@font\su@sec@size\bfseries\hyphenpenalty\@M\interlinepenalty=50}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\su@sec@indent}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {1.5ex \@plus .2ex}%
-                                     {\su@sec@title@font\su@subsec@size\bfseries\hyphenpenalty\@M\interlinepenalty\@M}}
-\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                     {\su@sec@title@font\su@subsec@size\bfseries\hyphenpenalty\@M\interlinepenalty=50}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\su@sec@indent}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {1.5ex \@plus .2ex}%
-                                     {\su@sec@title@font\su@subsubsec@size\bfseries\hyphenpenalty\@M\interlinepenalty\@M}}
+                                     {\su@sec@title@font\su@subsubsec@size\bfseries\hyphenpenalty\@M\interlinepenalty=50}}
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
                                     {3.25ex \@plus1ex \@minus.2ex}%
                                     {-1em}%
