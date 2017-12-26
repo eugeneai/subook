@@ -80,7 +80,7 @@
 \def\sbk@fontpath{subook/}
 
 \DeclareOption{a4paper}{
-\geometry{paper=a4paper, twoside, includehead, left=2.5cm, right=2.5cm, top=1.7cm, bottom=2.5cm}
+\geometry{paper=a4paper, includehead, left=2.5cm, right=2.5cm, top=1.7cm, bottom=2.5cm}
 \let\headwidth=\textwidth
 }
 
@@ -88,7 +88,7 @@
 \renewcommand{\chapter@su@name}{Глава}
 
 \DeclareOption{a5paper}{
-\geometry{paper=a5paper, twoside, inner=2cm, outer=1.8cm, top=1.7cm, bottom=1.9cm}
+\geometry{paper=a5paper, inner=2cm, outer=1.8cm, top=1.7cm, bottom=1.9cm}
 }
 
 \DeclareOption{microtyping}{
@@ -702,6 +702,10 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 % Scale=MatchLowercase,
 % BoldFont=xits-mathbold.otf
 % ]{xits-math.otf}
+
+\if@loadgostseventhreetwo
+\geometry{paper=a4paper, includehead, left=3cm, right=0.5cm, top=1.8cm, bottom=2cm}
+\fi
 
 \ifPDFTeX\relax
 \else
