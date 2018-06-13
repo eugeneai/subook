@@ -7,7 +7,7 @@ TARGETS=$(addsuffix .pdf,$(NAMES))
 all: $(TARGETS)
 
 %.pdf %.pdf_tex: %.svg
-	inkscape -z -D --file=$< --export-pdf=$@ --export-latex
+	inkscape -z -D --file=$< --export-pdf=$@ 
 
 clean:
 	rm -f $(TARGETS)
