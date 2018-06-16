@@ -78,6 +78,7 @@
 %-------------------- Option declarations ----------------------------
 
 \def\sbk@fontpath{subook/}
+\let\su@trans@func\relax
 
 \DeclareOption{a4paper}{
 \geometry{paper=a4paper, includehead, left=2.5cm, right=2.5cm, top=1.7cm, bottom=2.5cm}
@@ -457,6 +458,15 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 % \hyphenpenalty=10000 % to prevent hyps in headers
 }
 
+\DeclareOption{tinytitles}{
+\def\su@sec@size{\normalsize}
+\def\su@subsec@size{\normalsize}
+\def\su@subsubsec@size{\normalsize}
+\renewcommand\su@chapter@font@size{\normalsize}
+\let\su@trans@func\MakeUppercase
+% \hyphenpenalty=10000 % to prevent hyps in headers
+}
+
 \DeclareOption{irnitu}{
 %\geometry{includehead, left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
 %colontitles from edge 1.7 cm ??
@@ -486,7 +496,7 @@ BoldItalicFont=FiraSans-BoldItalic.otf
   \@loadgostseventhreetwotrue
   \renewcommand{\chaptername}{ГЛАВА}
   \renewcommand{\chapter@su@name}{ГЛАВА}
-  \renewcommand{\contentsname}{ОГЛАВЛЕНИЕ}
+  \renewcommand{\contentsname}{СОДЕРЖАНИЕ}
   \pagestyle{plain}
   \renewcommand\bibsection{%
     \chapter{\bibname}%
@@ -575,7 +585,7 @@ BoldItalicFont=FiraSans-BoldItalic.otf
     \fi
     }%
     {\interlinepenalty\@M\hyphenpenalty\@M
-    \su@chapter@font@size \su@chapter@font #1\par\nobreak
+    \su@chapter@font@size \su@chapter@font \su@trans@func #1\par\nobreak
     }
     \vskip 15\p@
     %\thispagestyle{empty}
@@ -694,7 +704,7 @@ BoldItalicFont=FiraSans-BoldItalic.otf
   {\parindent \z@ \raggedright
     \interlinepenalty\@M
     \hyphenpenalty\@M
-    {\su@chapter@font@size \su@chapter@font #1\par\nobreak}
+    {\su@chapter@font@size \su@chapter@font \su@trans@func #1\par\nobreak}
     \vskip 15\p@ %% Here
   }}
 
