@@ -78,6 +78,7 @@
 %-------------------- Option declarations ----------------------------
 
 \def\sbk@fontpath{subook/}
+\let\su@trans@func\relax
 
 \DeclareOption{a4paper}{
 \geometry{paper=a4paper, includehead, left=2.5cm, right=2.5cm, top=1.7cm, bottom=2.5cm}
@@ -457,6 +458,15 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 % \hyphenpenalty=10000 % to prevent hyps in headers
 }
 
+\DeclareOption{tinytitles}{
+\def\su@sec@size{\normalsize}
+\def\su@subsec@size{\normalsize}
+\def\su@subsubsec@size{\normalsize}
+\renewcommand\su@chapter@font@size{\normalsize}
+\let\su@trans@func\MakeUppercase
+% \hyphenpenalty=10000 % to prevent hyps in headers
+}
+
 \DeclareOption{irnitu}{
 %\geometry{includehead, left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
 %colontitles from edge 1.7 cm ??
@@ -486,7 +496,7 @@ BoldItalicFont=FiraSans-BoldItalic.otf
   \@loadgostseventhreetwotrue
   \renewcommand{\chaptername}{ГЛАВА}
   \renewcommand{\chapter@su@name}{ГЛАВА}
-  \renewcommand{\contentsname}{ОГЛАВЛЕНИЕ}
+  \renewcommand{\contentsname}{СОДЕРЖАНИЕ}
   \pagestyle{plain}
   \renewcommand\bibsection{%
     \chapter{\bibname}%
@@ -521,6 +531,21 @@ BoldItalicFont=FiraSans-BoldItalic.otf
                     \renewcommand\baselinestretch{1.2} % 1.5 looks bad
                     \setlength{\parindent}{1.27cm}
                     \let\su@sec@indent\parindent
+\renewcommand*\l@chapter[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode % \bfseries % Removed boldface in toc for chapter headers
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss \textbf{#2}}\par
+      \penalty\@highpenalty
+    \endgroup
+  \fi}
 }
 
 \ExecuteOptions{a5paper,handbook,fancybot,times,cambriamath,firamono,smalltitles,listbib,microtyping,final}
@@ -560,7 +585,7 @@ BoldItalicFont=FiraSans-BoldItalic.otf
     \fi
     }%
     {\interlinepenalty\@M\hyphenpenalty\@M
-    \su@chapter@font@size \su@chapter@font #1\par\nobreak
+    \su@chapter@font@size \su@chapter@font \su@trans@func #1\par\nobreak
     }
     \vskip 15\p@
     %\thispagestyle{empty}
@@ -645,6 +670,26 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 \@mkboth{\MakeUppercase{\bibname}}{\MakeUppercase{\bibname}}%
 }%
 
+\renewenvironment{thebibliography}[1]
+     {\chapter*{\bibname}%
+      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+
 % This is for the following table of contents printing
 \def\@sschapter#1{\if@twocolumn
                    \@topnewpage[\@makeschapterhead{#1}]%
@@ -659,7 +704,7 @@ BoldItalicFont=FiraSans-BoldItalic.otf
   {\parindent \z@ \raggedright
     \interlinepenalty\@M
     \hyphenpenalty\@M
-    {\su@chapter@font@size \su@chapter@font #1\par\nobreak}
+    {\su@chapter@font@size \su@chapter@font \su@trans@func #1\par\nobreak}
     \vskip 15\p@ %% Here
   }}
 
