@@ -494,8 +494,8 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 \DeclareOption{732}{
   % GOST 7.32
   \@loadgostseventhreetwotrue
-  \renewcommand{\chaptername}{ГЛАВА}
-  \renewcommand{\chapter@su@name}{ГЛАВА}
+  %\renewcommand{\chaptername}{ГЛАВА}
+  %\renewcommand{\chapter@su@name}{ГЛАВА}
   \renewcommand{\contentsname}{СОДЕРЖАНИЕ}
   \pagestyle{plain}
   \renewcommand\bibsection{%
@@ -749,7 +749,9 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 % ]{xits-math.otf}
 
 \if@loadgostseventhreetwo
+%\geometry{paper=a4paper}
 \geometry{paper=a4paper, includehead, left=2.5cm, right=1cm, top=1.8cm, bottom=2cm}
+\let\headwidth=\textwidth
 \fi
 
 \ifPDFTeX\relax
@@ -774,6 +776,7 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 \renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\thechapter\ #1}}{\MakeUppercase{\thechapter\ #1}}}
 \renewcommand{\sectionmark}[1]{\markright{\MakeUppercase{\thesection\ #1}}{}}
 \pagestyle{plain}
+%\pagestyle{fancy}
 \renewcommand{\contentsname}{ОГЛАВЛЕНИЕ}
 
 \else
