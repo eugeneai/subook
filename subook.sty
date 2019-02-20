@@ -52,7 +52,7 @@
 \DeclareMathAlphabet{\mathbfit}{OML}{cmm}{b}{it} % stub
 \def\LaTeXsys{\LaTeX2e}
 \else
-\defaultfontfeatures{Ligatures={TeX,Required}}
+\defaultfontfeatures{Ligatures={TeX,Required},Scale=MatchLowercase}
 \def\LaTeXsys{\LuaLaTeX}
 \fi
 \def\su@colonsize{\small}
@@ -179,33 +179,23 @@
 }
 
 \def\su@set@xitsmathfont{\setmathfont[
-Ligatures=TeX,
-Scale=MatchLowercase,
 BoldFont=xits-mathbold.otf
 ]{xits-math.otf}%
 }
 
 \def\su@set@cambriamathfont{\setmathfont[
-Ligatures=TeX,
-Scale=MatchLowercase,
 ]{Cambria Math}%
 }
 
 \def\su@set@lmmathfont{\setmathfont[
-Ligatures=TeX,
-Scale=MatchLowercase
 ]{latinmodern-math.otf}%
 }
 
 \def\su@set@asanamathfont{\setmathfont[
-Ligatures=TeX,
-Scale=MatchLowercase
 ]{Asana-Math.otf}%
 }
 
 \def\su@set@eulermathfont{\setmathfont[
-Ligatures=TeX,
-Scale=MatchLowercase,
 math-style=upright,
 vargreek-shape=unicode
 ]{euler.otf}%
@@ -242,23 +232,20 @@ vargreek-shape=unicode
  %\renewcommand{\rmdefault}{ftm}
  %\input{times.sty}
 \else
-\setmainfont[Ligatures=TeX,
+\setmainfont[
 Scale=\su@scale,
 ItalicFont=timesi.ttf,
 BoldFont=timesbd.ttf,
 BoldItalicFont=timesbi.ttf,
 ]{times.ttf}
 \setmonofont[
-Ligatures=TeX,
-Scale=MatchLowercase,Numbers=SlashedZero,
+Numbers=SlashedZero,
 Scale=\su@scale,
 ItalicFont=couri.ttf,
 BoldFont=courbd.ttf,
 BoldItalicFont=courbi.ttf,
 ]{cour.ttf}
 \setsansfont[
-Ligatures=TeX,
-Scale=MatchLowercase,
 Scale=\su@scale,
 ItalicFont=calibrii.ttf,
 BoldFont=calibrib.ttf,
@@ -283,27 +270,22 @@ BoldItalicFont=calibriz.ttf,
   BoldFont=PTS75F.ttf,
   ItalicFont=PTS56F.ttf,
   BoldItalicFont=PTS76F.ttf,
-  Scale=MatchLowercase
 ]{PTS55F.ttf}
 
 \newfontface\nwshape[ % Narrow Shape for PT Sans
   BoldFont=PTN77F.ttf,
-  Scale=MatchLowercase,
 ]{PTN57F.ttf}
 
 \newfontface\sfcpshape[ % Caption Shape for PT Sans
   BoldFont=PTC75F.ttf,
-  Scale=MatchLowercase
 ]{PTC55F.ttf}
 
 \newfontface\rmcpshape[ % Caption Shape for PT Sans
   ItalicFont=PTZ56F.ttf,
-  Scale=MatchLowercase
 ]{PTZ55F.ttf}
 
-\setmonofont[Ligatures=TeX,Scale=MatchLowercase,Numbers=SlashedZero,
+\setmonofont[Numbers=SlashedZero,
   BoldFont=PTM75F.ttf,
-  Scale=MatchLowercase
 ]{PTM55F.ttf}
 %\def\su@set@mathfont{\su@set@lmmathfont}
 \fi
@@ -325,8 +307,7 @@ BoldItalicFont=calibriz.ttf,
   ItalicFont=Liberastika-Italic.ttf,
   BoldItalicFont=Liberastika-BoldItalic.ttf
 ]{Liberastika-Regular.ttf}
-\setmonofont[Ligatures=TeX,Scale=MatchLowercase,Numbers=SlashedZero,
-  Scale=MatchLowercase,
+\setmonofont[Numbers=SlashedZero,
   BoldFont=LiberationMono-Bold.ttf,
   ItalicFont=LiberationMono-Italic.ttf,
   BoldItalicFont=LiberationMono-BoldItalic.ttf
@@ -357,34 +338,29 @@ BoldItalicFont=calibriz.ttf,
   BoldFont=PTS75F.ttf,
   ItalicFont=PTS56F.ttf,
   BoldItalicFont=PTS76F.ttf,
-  Scale=MatchLowercase
 ]{PTS55F.ttf}
 
 \newfontface\nwshape[ % Narrow Shape for PT Sans
   BoldFont=PTN77F.ttf,
-  Scale=MatchLowercase,
 ]{PTN57F.ttf}
 
 \newfontface\sfcpshape[ % Caption Shape for PT Sans
   BoldFont=PTC75F.ttf,
-  Scale=MatchLowercase
 ]{PTC55F.ttf}
 
 \newfontface\rmcpshape[ % Caption Shape for PT Sans
   ItalicFont=PTZ56F.ttf,
-  Scale=MatchLowercase
 ]{PTZ55F.ttf}
 
-\newfontfamily\ptmono[Ligatures=TeX,Scale=MatchLowercase,Numbers=SlashedZero,
+\newfontfamily\ptmono[Numbers=SlashedZero,
   BoldFont=PTM75F.ttf,
-  Scale=MatchLowercase
 ]{PTM55F.ttf}
 }
 
 \DeclareOption{freetimes}{
 %\renewcommand{\rmdefault}{ftm}
 \setmainfont[Scale=\su@scale]{Free Times}
-\setmonofont[Ligatures=TeX,Scale=MatchLowercase,Numbers=SlashedZero]{Free Courier}
+\setmonofont[Numbers=SlashedZero]{Free Courier}
 \fi
 \renewcommand\sutypeface{Таймс}
 }
@@ -393,7 +369,6 @@ BoldItalicFont=calibriz.ttf,
 \ifPDFTeX\relax
 \else
 \setmainfont[
-  Ligatures={TeX},
   BoldFont=7131157.ttf,
   ItalicFont=5131162.ttf,
   BoldItalicFont=6131147.ttf,
@@ -402,7 +377,6 @@ BoldItalicFont=calibriz.ttf,
 }
 \DeclareOption{qa}{
 \setmainfont[
-Ligatures={TeX},
 BoldFont=quantantiquabold.ttf,
 ItalicFont=quantantiquaitalic.ttf,
 BoldItalicFont=quantantiquabolditalic.ttf,
@@ -415,17 +389,25 @@ BoldItalicFont=quantantiquabolditalic.ttf,
 \DeclareOption{firamono}{
 \ifPDFTeX\relax
 \else
-\setmonofont[Ligatures=TeX,
-Scale=MatchLowercase,
+\setmonofont[
 Numbers=SlashedZero,
 BoldFont=Fira Mono Bold
 ]{Fira Mono Regular}
 \fi
 }
+\DeclareOption{firacode}{
+\ifPDFTeX\relax
+\else
+\setmonofont[
+Numbers=SlashedZero,
+BoldFont=Fira Code Bold
+]{Fira Code Regular}
+\fi
+}
 \DeclareOption{firasans}{
 \ifPDFTeX\relax
 \else
-\setsansfont[Ligatures=TeX,Scale=MatchLowercase,
+\setsansfont[
 BoldFont=FiraSans-Bold.otf,
 ItalicFont=FiraSans-Italic.otf,
 BoldItalicFont=FiraSans-BoldItalic.otf
@@ -437,7 +419,6 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 \ifPDFTeX\relax
 \else
 \setmonofont[
-  Scale=MatchLowercase,
 %  Ligatures={TeX},
   Numbers=SlashedZero,
   % BoldFont="inconsolatalgcbold.ttf",
