@@ -134,6 +134,10 @@
 
 %\DeclareStringOption[subook/]{fontdir}
 
+% If we deal with article class
+\providecommand{\thechapter}{}
+\providecommand{\chaptermark}{}
+
 \DeclareOption{monograph}{
   \setcitestyle{numbers,square,semicolon}
   \renewcommand{\thechapter}{\arabic{chapter}.}
