@@ -80,6 +80,16 @@
 \def\sbk@fontpath{subook/}
 \let\su@trans@func\relax
 
+\def\@makeschapterhead#1{%
+  %\vspace*{30\p@}%
+  {\parindent \z@ \raggedright
+    \interlinepenalty\@M
+    \hyphenpenalty\@M
+    {\su@chapter@font@size \su@chapter@font \su@trans@func #1\par\nobreak}
+    \vskip 15\p@ %% Here
+  }}
+
+
 \DeclareOption{a4paper}{
 \geometry{paper=a4paper, includehead, left=2.5cm, right=2.5cm, top=1.7cm, bottom=2.5cm}
 \let\headwidth=\textwidth
@@ -476,6 +486,8 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 \renewcommand{\baselinestretch}{1.0}
 }
 
+\def\rename@732{}
+
 \DeclareOption{732}{
   % GOST 7.32
   \@loadgostseventhreetwotrue
@@ -496,15 +508,15 @@ BoldItalicFont=FiraSans-BoldItalic.otf
     %\renewcommand\cftchappresnum{\chapter@su@name~}
   }
   \renewcommand{\thechapter}{\arabic{chapter}}
-  \def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+  \def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne%
                          \refstepcounter{chapter}%
                          \typeout{\@chapapp\space\thechapter.}%
                          \addcontentsline{toc}{chapter}%
                                    {\chaptername\space\protect\numberline{\thechapter}#1}%
-                    \else
+                    \else%
                       \addcontentsline{toc}{chapter}{#1}%
-                    \fi
-                    \chaptermark{#1}%
+                    \fi%
+                    $ $\chaptermark{#1}%
                     \addtocontents{lof}{\protect\addvspace{10\p@}}%
                     \addtocontents{lot}{\protect\addvspace{10\p@}}%
                     \if@twocolumn
@@ -513,9 +525,20 @@ BoldItalicFont=FiraSans-BoldItalic.otf
                       \@makechapterhead{#2}%
                       \@afterheading
                       \fi}
-                    \renewcommand\baselinestretch{1.2} % 1.5 looks bad
-                    \setlength{\parindent}{1.27cm}
-                    \let\su@sec@indent\parindent
+\let\su@trans@func\MakeUppercase
+\def\@makeschapterhead#1{%
+  %\vspace*{30\p@}%
+  {\parindent \z@ \centering
+    \interlinepenalty\@M
+    \hyphenpenalty\@M
+    {\su@chapter@font@size \su@chapter@font \su@trans@func #1\par\nobreak}
+    \vskip 15\p@ %% Here
+  }}
+
+\renewcommand\baselinestretch{1.2} % 1.5 looks bad
+\setlength{\parindent}{1.27cm}
+\let\su@sec@indent\parindent
+
 \renewcommand*\l@chapter[2]{%
   \ifnum \c@tocdepth >\m@ne
     \addpenalty{-\@highpenalty}%
@@ -531,9 +554,11 @@ BoldItalicFont=FiraSans-BoldItalic.otf
       \penalty\@highpenalty
     \endgroup
     \fi}
+\def\rename@732{%
 \renewcommand{\bibname}{СПИСОК ИПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}
 \renewcommand{\contentsname}{СОДЕРЖАНИЕ}
 \renewcommand{\chaptername}{}
+}
 }
 
 \ExecuteOptions{a5paper,handbook,fancybot,times,cambriamath,firamono,smalltitles,listbib,microtyping,final}
@@ -687,16 +712,6 @@ BoldItalicFont=FiraSans-BoldItalic.otf
                  \fi
 }
 
-\def\@makeschapterhead#1{%
-  %\vspace*{30\p@}%
-  {\parindent \z@ \raggedright
-    \interlinepenalty\@M
-    \hyphenpenalty\@M
-    {\su@chapter@font@size \su@chapter@font \su@trans@func #1\par\nobreak}
-    \vskip 15\p@ %% Here
-  }}
-
-
 \hypersetup{
     bookmarks=true,         % show bookmarks bar?
     unicode=true,          % non-Latin characters in Acrobat’s bookmarks
@@ -820,7 +835,7 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 
 \fi
 
-
+\rename@732
 }
 
 \renewcommand\section{\@startsection{section}{1}{\su@sec@indent}%
