@@ -149,14 +149,13 @@
 \providecommand{\chaptermark}{}
 
 \DeclareOption{monograph}{
-  \setcitestyle{numbers,square,semicolon}
-  \renewcommand{\thechapter}{\arabic{chapter}.}
+ \setcitestyle{numbers,square,semicolon}
+ \renewcommand{\thechapter}{\arabic{chapter}.}
 }
 \DeclareOption{handbook}{
-\setcitestyle{numbers,square,comma}
-\renewcommand{\chapter@su@name}{}
-  \renewcommand{\thechapter}{\arabic{chapter}.}
-
+ \setcitestyle{numbers,square,comma}
+ \renewcommand{\chapter@su@name}{}
+ \renewcommand{\thechapter}{\arabic{chapter}.}
 }
 \DeclareOption{fancytop}{
 %\fancypagestyle{plain}{%
@@ -260,7 +259,7 @@ BoldFont=courbd.ttf,
 BoldItalicFont=courbi.ttf,
 ]{cour.ttf}
 \setsansfont[
-% Scale=\su@scale,
+Scale=\su@scale,
 ItalicFont=Fira Sans Italic,
 BoldFont=Fira Sans Bold,
 BoldItalicFont=Fira Sans Bold Italic,
@@ -490,6 +489,8 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 
 \DeclareOption{732}{
   % GOST 7.32
+  \renewcommand{\chapter@su@name}{}
+  \renewcommand{\thechapter}{\arabic{chapter}}
   \@loadgostseventhreetwotrue
   %\renewcommand{\chaptername}{ГЛАВА}
   %\renewcommand{\chapter@su@name}{ГЛАВА}
@@ -557,7 +558,7 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 \def\rename@732{%
 \renewcommand{\bibname}{СПИСОК ИПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}
 \renewcommand{\contentsname}{СОДЕРЖАНИЕ}
-\renewcommand{\chaptername}{}
+%\renewcommand{\chaptername}{}
 }
 }
 
@@ -786,7 +787,8 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 
 \captionsetup[figure]{labelformat=simple,labelsep=period,font=small,labelfont={bf,small},textfont={small,it},format=hang,margin=3ex,justification=justified,singlelinecheck=false}
 \captionsetup[table]{format=rightcenter,labelsep=periodnewline,singlelinecheck=on,font={normalfont},labelfont={small,bf},textfont={normalfont,it},justification=raggedleft,skip=0.2ex}
-\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\thechapter.\ #1}}{\MakeUppercase{\thechapter.\ #1}}}
+% TODO: dots at numbers
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\thechapter\ #1}}{\MakeUppercase{\thechapter\ #1}}}
 \renewcommand{\sectionmark}[1]{\markright{\MakeUppercase{\thesection.\ #1}}{}}
 
 \fi
@@ -825,10 +827,13 @@ BoldItalicFont=FiraSans-BoldItalic.otf
 \renewcommand\cftsubsubsecaftersnum{}
 
 \else
+\renewcommand{\thesection}{\thechapter\arabic{section}}
+\renewcommand{\thefigure}{\thechapter\arabic{figure}}
+\renewcommand{\thetable}{\thechapter\arabic{table}}
 
 \renewcommand\cftpartaftersnum{.}
-\providecommand\cftchapaftersnum{.}
-\renewcommand\cftchapaftersnum{.}
+\providecommand\cftchapaftersnum{}
+\renewcommand\cftchapaftersnum{}
 \renewcommand\cftsecaftersnum{.}
 \renewcommand\cftsubsecaftersnum{.}
 \renewcommand\cftsubsubsecaftersnum{.}
