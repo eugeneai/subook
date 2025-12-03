@@ -1,0 +1,130 @@
+\documentclass{beamer}
+\usepackage{amsmath,amssymb,longtable,hhline}
+
+% \usepackage{minted}
+% \usemintedstyle{tango} % bw
+\usetheme{Madrid}
+\usecolortheme{beaver}
+
+\RequirePackage{tabularx}
+\RequirePackage{xcolor}
+\usepackage{pifont}
+\definecolor{darkding}{RGB}{200,56,0}
+\setbeamertemplate{itemize item}{\scriptsize\hbox{\color{darkding}{\bfseries\ding{113}}}}
+
+
+\usepackage{polyglossia}
+\setmainlanguage{russian}
+\setotherlanguage{english}
+\setkeys{russian}{babelshorthands=true}
+
+\setmainfont{Linux Biolinum O}
+\setromanfont{Linux Biolinum O}
+\setsansfont{Linux Biolinum O}
+\setmonofont{Fira Code}
+
+\newfontfamily{\cyrillicfont}{Linux Biolinum O}
+\newfontfamily{\cyrillicfontrm}{Linux Biolinum O}
+\newfontfamily{\cyrillicfonttt}{Fira Code}
+\newfontfamily{\cyrillicfontsf}{Linux Biolinum O}
+\newcommand{\HHuge}{\fontsize{60}{60}\selectfont}
+
+
+\RequirePackage{luatextra}
+\RequirePackage{graphicx}
+\graphicspath{{pics/}}
+
+\defaultfontfeatures{Ligatures={TeX,Required},Scale=MatchLowercase} % - -- --- ffi
+
+\setmainfont{Fira Mono}
+
+\begin{document}
+
+\title[Учет радиодеталей]{Программная система учета радиодеталей}
+\subtitle{Этап проектирования}
+\author[Е.~А.~Черкашин]{Евгений Александрович Черкашин, к.т.н., доцент каф.~ИС}
+\date{Иркутск -- 2021}
+\institute[ИДСТУ СО РАН]{Институт динамики систем и теории управления Сибирского отделения ....}
+% \logo{\includegraphics[width=2cm]{fig1.pdf}}
+
+\frame{\titlepage}
+
+\begin{frame}
+  \vfill
+  \begin{block}{}
+    \fontsize{20}{25}\selectfont \bfseries\centering
+    \alert{Программная система учета радиодеталей}
+  \end{block}
+\vspace{3em}
+\noindent\begin{tabularx}{\textwidth} {
+  >{\raggedright\arraybackslash}X
+  >{\raggedright}X }
+&
+Студентки 4 курса группы 2361\\
+Фамилия Имя Отчество\\[0.3em]
+% Направление\;: 02.03.03~--~Математическое обеспечение и администрирование информационных систем\\[2em]
+Руководитель:\\
+канд.~техн.~наук доцент\\
+Иванов Иван Иванович
+% Курсовая работа защищена с оценкой\\[1em] \underline{\hspace{3cm}}
+\end{tabularx}
+\vfill
+\begin{center}
+  Иркутск -- 2021
+\end{center}%
+\end{frame}
+
+\begin{frame}[fragile]{Объект автоматизации}
+
+  \textbf{Объектом} автоматизации выступал
+
+  \textbf{Предмет} автоматизации -- это \ldots
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Другой способ выделить содержимое}
+
+  \begin{block}{Объект автоматизации}
+    Процесс проектирования печатных плат
+  \end{block}
+
+  \begin{alertblock}{Предмет автоматизации}
+    Ведение базы данных радиодеталей со ссылками на документациюr
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{Пример приложения представленного решения}
+  \begin{columns}
+    \begin{column}{0.5\linewidth}
+      \begin{block}{Свойства результата}
+        \begin{itemize}
+        \item Результат состоит из трех компонент
+        \item Одна из компонент -- это текст
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.45\linewidth}
+      \includegraphics[width=0.9\linewidth]{fig1.pdf}
+    \end{column}
+  \end{columns}
+
+\end{frame}
+
+
+\begin{frame}
+  \vfill
+  \centering
+  \Large\bfseries Вопросы?
+  \vfill
+\end{frame}
+
+\end{document}
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
